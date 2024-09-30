@@ -181,7 +181,9 @@ export default function MapWithGeocoder() {
 
   return (
     <>
-      <SearchBox
+    {
+      // @ts-ignore
+      (<SearchBox
         accessToken={accessToken}
         map={mapInstanceRef.current}
         mapboxgl={mapboxgl}
@@ -194,8 +196,12 @@ export default function MapWithGeocoder() {
           country: 'BR'
         }}
         marker
-      />
-      <div id="map-container" ref={mapContainerRef} style={{ height: "100%"}} />
+      />)
+    }
+      {
+        // @ts-ignore
+        (<div id="map-container" ref={mapContainerRef} style={{ height: "100%"}} />)
+      }
     </>
   );
 }
