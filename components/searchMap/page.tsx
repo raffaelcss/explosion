@@ -14,7 +14,6 @@ export default function MapWithGeocoder() {
 
   const mapContainerRef = useRef();
   const mapInstanceRef = useRef();
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [mapLoaded, setMapLoaded] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const [coordinates, setCoordinates] = useState([0, 0]);
