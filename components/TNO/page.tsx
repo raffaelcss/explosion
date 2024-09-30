@@ -321,7 +321,7 @@ export default function TNO() {
     {
       limites.map((x, i) => {
         return (<>
-        <div className="mt-2">Distância: {x}m - {getConsequencia(i)}</div>
+        <div className="mt-2">Distância: {x}m - {getConsequencia(i+1)}</div>
         </>)
       })
     }
