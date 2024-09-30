@@ -118,7 +118,7 @@ export default function MapWithGeocoder() {
         mapInstanceRef.current.once('touchend', onUp);
       });
     });
-
+    // @ts-ignore
     mapInstanceRef.current.on('zoom', () => {
       if (mapInstanceRef){
         if (mapInstanceRef.current){
