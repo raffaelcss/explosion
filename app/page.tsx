@@ -1,3 +1,4 @@
+"use client"
 import InfoContainer from "../components/InfoContainer/page";
 import MapWithGeocoder from "../components/searchMap/page";
 

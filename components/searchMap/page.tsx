@@ -19,6 +19,12 @@ export default function MapWithGeocoder() {
   const [coordinates, setCoordinates] = useState([0, 0]);
 
   useEffect(() => {
+    if (typeof document == 'undefined') {
+      return
+    }
+    if (!document){
+      return
+    }
     mapboxgl.accessToken = accessToken;
 
     // @ts-ignore
@@ -179,10 +185,19 @@ export default function MapWithGeocoder() {
 
   }, [limites]);
 
+  if (typeof document == 'undefined') {
+    return (<>
+    </>)
+  }
+
+  if (!document){
+    return (<></>)
+  }
+
   return (
     <>
-    {
-      // @ts-ignore
+    {/* {
+      
       (<SearchBox
         accessToken={accessToken}
         map={mapInstanceRef.current}
@@ -197,7 +212,7 @@ export default function MapWithGeocoder() {
         }}
         marker
       />)
-    }
+    } */}
       {
         // @ts-ignore
         (<div id="map-container" ref={mapContainerRef} style={{ height: "100%"}} />)
