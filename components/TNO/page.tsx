@@ -290,6 +290,16 @@ export default function TNO() {
     return [overPressure, duration];
   }
 
+  function getConsequencia(value: number) {
+    if (value == 1) return "Vagões ferroviários carregados virados";
+    if (value == 2) return "Demolição quase completa de casas";
+    if (value == 3) return "Ruptura de revestimento de edifícios industriais leves";
+    if (value == 4) return "50% de destruição de quarteirões de casas";
+    if (value == 5) return "Colapso parcial de paredes e telhados de casas";
+    if (value == 6) return "Demolição parcial de casas, tornando-as inabitáveis";
+    return "";
+  }
+
   useEffect(() => {
     let durations = []
     let over_cal = []
@@ -309,9 +319,9 @@ export default function TNO() {
   return (<>
   <div>
     {
-      limites.map((x) => {
+      limites.map((x, i) => {
         return (<>
-        <div className="mt-2">Distância: {x} m</div>
+        <div className="mt-2">Distância: {x}m - {getConsequencia(i)}</div>
         </>)
       })
     }
