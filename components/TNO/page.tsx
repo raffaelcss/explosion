@@ -260,8 +260,8 @@ export default function TNO() {
     // # Cálculo de sobre pressão escalonada
     let x0 = getX0(staggeredDistance, blast_overpressure_table);
     let x1 = getX1(x0, blast_overpressure_table);
-    let y0 = getY(x0, blast_overpressure_table);
-    let y1 = getY(x1, blast_overpressure_table);
+    let y0 = getY(x0, blast_overpressure_table) || 0;
+    let y1 = getY(x1, blast_overpressure_table) || 0;
     const scaledOverPressure = calcScaledValue(
       staggeredDistance,
       x0,
@@ -277,8 +277,8 @@ export default function TNO() {
     // # Cálculo de duração escalonada
     x0 = getX0(staggeredDistance, blast_duration_table);
     x1 = getX1(x0, blast_duration_table);
-    y0 = getY(x0, blast_duration_table);
-    y1 = getY(x1, blast_duration_table);
+    y0 = getY(x0, blast_duration_table) || 0;
+    y1 = getY(x1, blast_duration_table) || 0;
     const scaledDuration = calcScaledValue(staggeredDistance, x0, x1, y0, y1);
     const duration = calcDuration(
       scaledDuration,
