@@ -51,12 +51,13 @@ export default function MapWithGeocoder() {
       function getExplosionColor(level: number): string {
         // Mapeia os níveis de 1 a 6 para as cores definidas
         const colors: { [key: number]: string } = {
-          6: "rgba(255, 0, 0, 0.3)",        // Vermelho Intenso
-          5: "rgba(255, 165, 0, 0.3)",      // Laranja Fogo
-          4: "rgba(255, 255, 0, 0.3)",      // Amarelo Forte
-          3: "rgba(255, 255, 102, 0.3)",    // Amarelo Pálido
-          2: "rgba(255, 200, 0, 0.3)",      // Laranja Claro
-          1: "rgba(255, 200, 128, 0.4)"     // Cinza Fumaça
+          6: "rgba(255, 0, 0, 0.6)",    
+          5: "rgba(255, 85, 0, 0.6)",  
+          4: "rgba(255, 128, 0, 0.6)",  
+          3: "rgba(255, 170, 0, 0.5)",
+          2: "rgba(255, 213, 0, 0.4)",  
+          1: "rgba(255, 255, 0, 0.3)",
+          0: "rgba(0, 128, 255, 0.1)"  
         };
       
         // Retorna a cor correspondente ao nível informado
@@ -64,7 +65,7 @@ export default function MapWithGeocoder() {
       }
 
       limites.map((limite, i) => {
-        const id = "point"+(i+1);
+        const id = "point"+(i);
         const escala = 1/30;
         const size = limite/(escala*(2**(22 - zoom)));
         // @ts-ignore
@@ -74,7 +75,7 @@ export default function MapWithGeocoder() {
           source: 'point',
           paint: {
             'circle-radius': size,
-            'circle-color': getExplosionColor(i+1)
+            'circle-color': getExplosionColor(i),
           }
         });
       })
@@ -85,8 +86,8 @@ export default function MapWithGeocoder() {
         type: 'circle',
         source: 'point',
         paint: {
-          'circle-radius': 10,
-          'circle-color': '#FF0000'
+          'circle-radius': 4,
+          'circle-color': '#5d00f2',
         }
       });
 
@@ -132,13 +133,22 @@ export default function MapWithGeocoder() {
           const zoom = mapInstanceRef.current.getZoom();
           setZoom(zoom);
           const escala = 1 / 30;   // medida/(escala*(2**(22 - zoom)))
+          let points_size = [] as number[];
           // @ts-ignore
           limites.map((limite, i) => {
-            const id = 'point' + (i + 1);
+            const id = 'point' + (i);
             const size1 = limite/(escala*(2**(22 - zoom)));
+            if (i > 1) points_size.push(size1);
             // @ts-ignore
             mapInstanceRef.current.setPaintProperty(id, 'circle-radius', size1);
-          })          
+          })  
+          if (points_size.every(value => value <= 10)) {
+            // @ts-ignore
+            mapInstanceRef.current.setPaintProperty("point", 'circle-radius', 10);
+          } else {
+            // @ts-ignore
+            mapInstanceRef.current.setPaintProperty("point", 'circle-radius', 1);
+          }      
         }
       }
     });

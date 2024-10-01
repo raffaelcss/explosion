@@ -2,6 +2,7 @@
 import { useTNO } from "@/hooks/useTNO";
 import { Box, Slider, TextField } from "@mui/material";
 import TNO from "../TNO/page";
+import { useState } from "react";
 
 export default function InfoContainer() {
   const {
@@ -17,6 +18,11 @@ export default function InfoContainer() {
     setVolume,
     setClas,
   } = useTNO();
+
+  const [val1, setval1] = useState(calor.toFixed(1));
+  const [val2, setval2] = useState(velocidade.toFixed(1));
+  const [val3, setval3] = useState(pressao.toFixed(1));
+  const [val4, setval4] = useState(volume.toFixed(1));
 
   const marks = [
     {
@@ -69,62 +75,83 @@ export default function InfoContainer() {
     return `${value}`;
   }
 
+  function adjustString(str: string) {
+    if (str.indexOf('.') !== str.lastIndexOf('.')) {
+      return str.slice(0, -1);
+    }
+    if (str.startsWith("0")) return str.slice(1, str.length -1);
+    return str;
+  }
+
   return (
-    <div className="p-2 flex flex-col items-center bg-slate-200 rounded-lg">
-      <div className="text-3xl font-bold text-center w-full my-6">
-        Simulador TNO
+    <div className="flex flex-col items-center justify-between gap-2">
+      <div className="p-2 flex items-center bg-slate-200 rounded-lg h-full">
+        <div className="flex w-72 flex-col items-center">
+          <div className="text-3xl font-bold text-center w-full my-6">
+            Simulador TNO
+          </div>
+          <div className="mt-4 grid gap-2 grid-cols-2">
+            <TextField
+              id="calor"
+              label="Calor de combustão em MJ/m³"
+              value={val1}
+              sx={{ width: '120px' }}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                setval1(adjustString(event.target.value));
+                setCalor(parseFloat(adjustString(event.target.value)));
+              }}
+            />
+            <TextField
+              id="vel"
+              label="Velocidade do som"
+              value={val2}
+              sx={{ width: '120px' }}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                setval2(adjustString(event.target.value));
+                setVelocidade(parseFloat(adjustString(event.target.value)));
+              }}
+            />
+            <TextField
+              id="pres"
+              label="Pressão Pa"
+              value={val3}
+              sx={{ width: '120px' }}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                setval3(adjustString(event.target.value));
+                setPressao(parseFloat(adjustString(event.target.value) || "0"));
+              }}
+            />
+            <TextField
+              id="vol"
+              label="Volume total m³"
+              value={val4}
+              sx={{ width: '120px' }}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                setval4(adjustString(event.target.value));
+                setVolume(parseFloat(adjustString(event.target.value)));
+              }}
+            />
+          </div>
+          <Box className="mt-5" sx={{ width: 200 }}>
+            <div>Classe</div>
+            <Slider
+              aria-label="Always visible"
+              value={clas}
+              onChange={(event: Event, newValue: number | number[]) => {
+                setClas(newValue as number);
+              }}
+              getAriaValueText={valuetext}
+              step={1}
+              min={1}
+              max={10}
+              marks={marks}
+              valueLabelDisplay="on"
+            />
+          </Box>
+        </div>
+        <TNO />
       </div>
-      <div className="mt-4 grid gap-2 grid-cols-2">
-        <TextField
-          id="calor"
-          label="Calor de combustão em MJ/m³"
-          value={calor}
-          onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-            setCalor(parseFloat(event.target.value));
-          }}
-        />
-        <TextField
-          id="vel"
-          label="Velocidade do som m/s"
-          value={velocidade}
-          onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-            setVelocidade(parseFloat(event.target.value));
-          }}
-        />
-        <TextField
-          id="pres"
-          label="Pressão do ambiente em Pa"
-          value={pressao}
-          onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-            setPressao(parseFloat(event.target.value));
-          }}
-        />
-        <TextField
-          id="vol"
-          label="Volume total em m³"
-          value={volume}
-          onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-            setVolume(parseFloat(event.target.value));
-          }}
-        />
-      </div>
-      <Box className="mt-5" sx={{ width: 350 }}>
-        <div>Classe</div>
-        <Slider
-          aria-label="Always visible"
-          value={clas}
-          onChange={(event: Event, newValue: number | number[]) => {
-            setClas(newValue as number);
-          }}
-          getAriaValueText={valuetext}
-          step={1}
-          min={1}
-          max={10}
-          marks={marks}
-          valueLabelDisplay="on"
-        />
-      </Box>
-      <TNO />
+      <div className="">Equipe de PSM Aperam South America - 2024</div>
     </div>
   );
 }

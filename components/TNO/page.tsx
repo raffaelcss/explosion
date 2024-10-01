@@ -20,7 +20,7 @@ export default function TNO() {
     setClas,
     setXs,
     setOverPressures,
-    setLimites
+    setLimites,
   } = useTNO();
 
   function vlookup(
@@ -183,6 +183,8 @@ export default function TNO() {
       .reverse()
       .map((pressure, index) => [pressure, xs[xs.length - 1 - index]]);
 
+    // Area segura
+    const res0 = vlookup(1.03, data1, 2, true);
     // Demolição parcial de casas, tornando-as inabitáveis
     const res1 = vlookup(6.9, data1, 2, true);
     // Colapso parcial de paredes e telhados de casas
@@ -196,7 +198,7 @@ export default function TNO() {
     // Vagões ferroviários carregados virados
     const res6 = vlookup(55.1, data1, 2, true);
 
-    return [res1, res2, res3, res4, res5, res6];
+    return [res0, res1, res2, res3, res4, res5, res6];
   }
 
   function calcAll(
@@ -262,13 +264,18 @@ export default function TNO() {
     let x1 = getX1(x0, blast_overpressure_table);
     let y0 = getY(x0, blast_overpressure_table) || 0;
     let y1 = getY(x1, blast_overpressure_table) || 0;
-    const scaledOverPressure = calcScaledValue(
-      staggeredDistance,
-      x0,
-      x1,
-      y0,
-      y1
-    );
+    let scaledOverPressure = 0;
+    try {
+      scaledOverPressure = calcScaledValue(
+        staggeredDistance,
+        x0,
+        x1,
+        y0,
+        y1
+      );
+    } catch (error) {
+      console.error(error);
+    }
     const overPressure = calcSideonOverPressure(
       scaledOverPressure,
       pressao / 1000
@@ -279,7 +286,12 @@ export default function TNO() {
     x1 = getX1(x0, blast_duration_table);
     y0 = getY(x0, blast_duration_table) || 0;
     y1 = getY(x1, blast_duration_table) || 0;
-    const scaledDuration = calcScaledValue(staggeredDistance, x0, x1, y0, y1);
+    let scaledDuration = 0;
+    try {
+      scaledDuration = calcScaledValue(staggeredDistance, x0, x1, y0, y1);
+    } catch (error) {
+      console.error(error);
+    }
     const duration = calcDuration(
       scaledDuration,
       energy,
@@ -291,20 +303,34 @@ export default function TNO() {
   }
 
   function getConsequencia(value: number) {
-    if (value == 1) return "Vagões ferroviários carregados virados";
-    if (value == 2) return "Demolição quase completa de casas";
-    if (value == 3) return "Ruptura de revestimento de edifícios industriais leves";
-    if (value == 4) return "50% de destruição de quarteirões de casas";
-    if (value == 5) return "Colapso parcial de paredes e telhados de casas";
-    if (value == 6) return "Demolição parcial de casas, tornando-as inabitáveis";
+    if (value == 6) return "Vagões ferroviários carregados virados";
+    if (value == 5) return "Demolição quase completa de casas";
+    if (value == 4)
+      return "Ruptura de revestimento de edifícios industriais leves";
+    if (value == 3) return "50% de destruição de quarteirões de casas";
+    if (value == 2) return "Colapso parcial de paredes e telhados de casas";
+    if (value == 1)
+      return "Demolição parcial de casas, tornando-as inabitáveis";
+    if (value == 0) return "Área segura";
     return "";
   }
 
+  function getPression(value: number) {
+    if (value == 6) return 55.1;
+    if (value == 5) return 48.4;
+    if (value == 4) return 34.5;
+    if (value == 3) return 20.7;
+    if (value == 2) return 13.8;
+    if (value == 1) return 6.9;
+    if (value == 0) return 1.03;
+    return 0;
+  }
+
   useEffect(() => {
-    let durations = []
-    let over_cal = []
-    let xs_calc = []
-    for (let i = 1; i < 1000; i++) {
+    let durations = [];
+    let over_cal = [];
+    let xs_calc = [];
+    for (let i = 1; i < 3000; i++) {
       const [overPressure, duration] = calcAll(clas, i, pressao, velocidade);
       over_cal.push(overPressure);
       durations.push(duration);
@@ -314,17 +340,29 @@ export default function TNO() {
     setOverPressures(over_cal);
     setXs(xs_calc);
 
-    setLimites(getMoreImportantImpactsRadius(xs_calc, over_cal).map((x) => x || 0));
+    setLimites(
+      getMoreImportantImpactsRadius(xs_calc, over_cal).map((x) => x || 0)
+    );
   }, [clas, pressao, velocidade, calor, volume]);
-  return (<>
-  <div>
-    {
-      limites.map((x, i) => {
-        return (<>
-        <div className="mt-2">Distância: {x}m - {getConsequencia(i+1)}</div>
-        </>)
-      })
-    }
-  </div>
-  </>);
+  return (
+    <>
+      <div>
+        {limites.reverse().map((x, i) => {
+          return (
+            <>
+              <div className="mt-1 bg-slate-300 rounded px-1 flex items-center gap-2">
+                <div className={`item-${i} ${i == 6 ? "text-white": ""} p-1 flex gap-1 w-20 justify-between`}>
+                  <div>{getPression(i)}</div>
+                  <div>KPa</div>
+                </div>
+                <div className="w-64 text-justify">
+                  {i == 0 ? "A partir de" : "Até"} {x}m - {getConsequencia(i)}
+                </div>
+              </div>
+            </>
+          );
+        })}
+      </div>
+    </>
+  );
 }
