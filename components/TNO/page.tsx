@@ -347,7 +347,7 @@ export default function TNO() {
   return (
     <>
       <div>
-        {limites.reverse().map((x, i) => {
+        {limites.slice().reverse().map((x, i) => {
           return (
             <>
               <div className="mt-1 bg-slate-300 rounded px-1 flex items-center gap-2">
