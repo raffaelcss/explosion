@@ -11,18 +11,20 @@ export default function InfoContainer() {
     pressao,
     volume,
     clas,
-    zoom,
+    perc,
     setCalor,
     setVelocidade,
     setPressao,
     setVolume,
     setClas,
+    setPerc
   } = useTNO();
 
   const [val1, setval1] = useState(calor.toFixed(1));
   const [val2, setval2] = useState(velocidade.toFixed(1));
   const [val3, setval3] = useState(pressao.toFixed(1));
   const [val4, setval4] = useState(volume.toFixed(1));
+  const [val5, setval5] = useState((perc * 100).toFixed(1));
 
   const marks = [
     {
@@ -85,17 +87,17 @@ export default function InfoContainer() {
 
   return (
     <div className="flex flex-col items-center justify-between gap-2">
-      <div className="p-2 flex items-center bg-slate-200 rounded-lg h-full">
+      <div className="p-2 gap-2 flex flex-col md:flex-row items-center bg-slate-200 rounded-lg h-full">
         <div className="flex w-72 flex-col items-center">
           <div className="text-3xl font-bold text-center w-full my-6">
             Simulador TNO
           </div>
-          <div className="mt-4 grid gap-2 grid-cols-2">
+          <div className="mt-4 grid gap-y-2 grid-cols-2">
             <TextField
               id="calor"
               label="Calor de combustão em MJ/m³"
               value={val1}
-              sx={{ width: '120px' }}
+              sx={{ width: '140px' }}
               onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                 setval1(adjustString(event.target.value));
                 setCalor(parseFloat(adjustString(event.target.value)));
@@ -105,7 +107,7 @@ export default function InfoContainer() {
               id="vel"
               label="Velocidade do som"
               value={val2}
-              sx={{ width: '120px' }}
+              sx={{ width: '140px' }}
               onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                 setval2(adjustString(event.target.value));
                 setVelocidade(parseFloat(adjustString(event.target.value)));
@@ -115,7 +117,7 @@ export default function InfoContainer() {
               id="pres"
               label="Pressão Pa"
               value={val3}
-              sx={{ width: '120px' }}
+              sx={{ width: '140px' }}
               onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                 setval3(adjustString(event.target.value));
                 setPressao(parseFloat(adjustString(event.target.value) || "0"));
@@ -125,14 +127,24 @@ export default function InfoContainer() {
               id="vol"
               label="Volume total m³"
               value={val4}
-              sx={{ width: '120px' }}
+              sx={{ width: '140px' }}
               onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                 setval4(adjustString(event.target.value));
                 setVolume(parseFloat(adjustString(event.target.value)));
               }}
             />
+            <TextField
+              id="perc"
+              label="Explosividade de interesse em %"
+              value={val5}
+              sx={{ width: '284px' }}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                setval5(adjustString(event.target.value));
+                setPerc(parseFloat(adjustString(event.target.value)) / 100);
+              }}
+            />
           </div>
-          <Box className="mt-5" sx={{ width: 200 }}>
+          <Box className="mt-4" sx={{ width: 250 }}>
             <div>Classe</div>
             <Slider
               aria-label="Always visible"

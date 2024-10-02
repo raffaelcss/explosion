@@ -13,6 +13,7 @@ export default function TNO() {
     xs,
     overPressures,
     limites,
+    perc,
     setCalor,
     setVelocidade,
     setPressao,
@@ -186,15 +187,15 @@ export default function TNO() {
     // Area segura
     const res0 = vlookup(1.03, data1, 2, true);
     // Demolição parcial de casas, tornando-as inabitáveis
-    const res1 = vlookup(6.9, data1, 2, true);
+    const res1 = vlookup(2.07, data1, 2, true);
     // Colapso parcial de paredes e telhados de casas
-    const res2 = vlookup(13.8, data1, 2, true);
+    const res2 = vlookup(4.8, data1, 2, true);
     // 50% de destruição de quarteirões de casas
-    const res3 = vlookup(20.7, data1, 2, true);
+    const res3 = vlookup(8.3, data1, 2, true);
     // Ruptura de revestimento de edifícios industriais leves
-    const res4 = vlookup(34.5, data1, 2, true);
+    const res4 = vlookup(13.8, data1, 2, true);
     // Demolição quase completa de casas
-    const res5 = vlookup(48.4, data1, 2, true);
+    const res5 = vlookup(27.6, data1, 2, true);
     // Vagões ferroviários carregados virados
     const res6 = vlookup(55.1, data1, 2, true);
 
@@ -251,7 +252,7 @@ export default function TNO() {
         blast_duration_table = tables.blast_1_duration_table;
     }
     // # Cálculo de energia
-    const energy = calcEnergy(calor, volume);
+    const energy = calcEnergy(calor, volume * perc);
     // # Cálculo de distancia escalonada
     const staggeredDistance = calcStaggeredDistance(
       energy,
@@ -304,14 +305,12 @@ export default function TNO() {
 
   function getConsequencia(value: number) {
     if (value == 6) return "Vagões ferroviários carregados virados";
-    if (value == 5) return "Demolição quase completa de casas";
-    if (value == 4)
-      return "Ruptura de revestimento de edifícios industriais leves";
-    if (value == 3) return "50% de destruição de quarteirões de casas";
-    if (value == 2) return "Colapso parcial de paredes e telhados de casas";
-    if (value == 1)
-      return "Demolição parcial de casas, tornando-as inabitáveis";
-    if (value == 0) return "Área segura";
+    if (value == 5) return "Demolição de prédios e colapso de tanques";
+    if (value == 4) return "Colapso parcial de paredes e telhados";
+    if (value == 3) return "Janelas quebradas e deformação de paineis de alumínio";
+    if (value == 2) return "Danos a estrutura de casas";
+    if (value == 1) return "Danos estruturais menores";
+    if (value == 0) return "Área afetada por projeção de material";
     return "";
   }
 
@@ -343,11 +342,11 @@ export default function TNO() {
     setLimites(
       getMoreImportantImpactsRadius(xs_calc, over_cal).map((x) => x || 0)
     );
-  }, [clas, pressao, velocidade, calor, volume]);
+  }, [clas, pressao, velocidade, calor, volume, perc]);
   return (
     <>
       <div>
-        {limites.slice().reverse().map((x, i) => {
+        {limites.slice().map((x, i) => {
           return (
             <>
               <div className="mt-1 bg-slate-300 rounded px-1 flex items-center gap-2">
@@ -355,8 +354,8 @@ export default function TNO() {
                   <div>{getPression(i)}</div>
                   <div>KPa</div>
                 </div>
-                <div className="w-64 text-justify">
-                  {i == 0 ? "A partir de" : "Até"} {x}m - {getConsequencia(i)}
+                <div className="w-64 text-pretty text-justify">
+                  <span className="font-bold">{x}m</span> - {getConsequencia(i)}
                 </div>
               </div>
             </>

@@ -57,7 +57,7 @@ export default function MapWithGeocoder() {
           3: "rgba(255, 170, 0, 0.5)",
           2: "rgba(255, 213, 0, 0.4)",  
           1: "rgba(255, 255, 0, 0.3)",
-          0: "rgba(0, 128, 255, 0.1)"  
+          0: "rgba(0, 128, 255, 0.2)"  
         };
       
         // Retorna a cor correspondente ao nível informado
