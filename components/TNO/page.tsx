@@ -357,7 +357,7 @@ export default function TNO() {
                   </div>
                   <div>{calcAll(clas, x, pressao, velocidade)[1].toFixed(1)} ms</div>
                 </div>
-                <div className="w-64 text-pretty text-justify">
+                <div className="w-64 text-pretty text-left">
                   <span className="font-bold">{x}m</span> - {getConsequencia(i)}
                 </div>
               </div>
