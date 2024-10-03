@@ -90,7 +90,7 @@ export default function InfoContainer() {
       <div className="p-2 gap-2 flex flex-col md:flex-row items-center bg-slate-200 rounded-lg h-full">
         <div className="flex w-72 flex-col items-center">
           <div className="text-3xl font-bold text-center w-full my-6">
-            Simulador TNO
+            BlastImpact Sim
           </div>
           <div className="mt-4 grid gap-y-2 grid-cols-2">
             <TextField

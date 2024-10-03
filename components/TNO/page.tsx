@@ -350,9 +350,12 @@ export default function TNO() {
           return (
             <>
               <div className="mt-1 bg-slate-300 rounded px-1 flex items-center gap-2">
-                <div className={`item-${i} ${i == 6 ? "text-white": ""} p-1 flex gap-1 w-20 justify-between`}>
-                  <div>{getPression(i)}</div>
-                  <div>KPa</div>
+                <div className={`item-${i} ${i == 6 ? "text-white": ""} p-1 flex items-center flex-col w-20`}>
+                  <div className="flex gap-1 justify-between">
+                    <div>{getPression(i)}</div>
+                    <div>KPa</div>
+                  </div>
+                  <div>{calcAll(clas, x, pressao, velocidade)[1].toFixed(1)} ms</div>
                 </div>
                 <div className="w-64 text-pretty text-justify">
                   <span className="font-bold">{x}m</span> - {getConsequencia(i)}
