@@ -12,12 +12,14 @@ export default function InfoContainer() {
     volume,
     clas,
     perc,
+    fator,
     setCalor,
     setVelocidade,
     setPressao,
     setVolume,
     setClas,
-    setPerc
+    setPerc,
+    setFator
   } = useTNO();
 
   const [val1, setval1] = useState(calor.toFixed(1));
@@ -25,6 +27,7 @@ export default function InfoContainer() {
   const [val3, setval3] = useState(pressao.toFixed(1));
   const [val4, setval4] = useState(volume.toFixed(1));
   const [val5, setval5] = useState((perc * 100).toFixed(1));
+  const [val6, setval6] = useState(fator.toFixed(1));
 
   const marks = [
     {
@@ -92,7 +95,7 @@ export default function InfoContainer() {
           <div className="text-3xl font-bold text-center w-full my-6">
             BlastImpact Sim
           </div>
-          <div className="mt-4 grid gap-y-2 grid-cols-2">
+          <div className="mt-4 grid gap-2 grid-cols-2">
             <TextField
               id="calor"
               label="Calor de combustão em MJ/m³"
@@ -137,10 +140,20 @@ export default function InfoContainer() {
               id="perc"
               label="Explosividade de interesse em %"
               value={val5}
-              sx={{ width: '284px' }}
+              sx={{ width: '140px' }}
               onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                 setval5(adjustString(event.target.value));
                 setPerc(parseFloat(adjustString(event.target.value)) / 100);
+              }}
+            />
+            <TextField
+              id="fator"
+              label="Fator"
+              value={val6}
+              sx={{ width: '140px' }}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                setval6(adjustString(event.target.value));
+                setFator(parseFloat(adjustString(event.target.value)));
               }}
             />
           </div>

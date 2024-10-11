@@ -14,6 +14,7 @@ export default function TNO() {
     overPressures,
     limites,
     perc,
+    fator,
     setCalor,
     setVelocidade,
     setPressao,
@@ -331,7 +332,7 @@ export default function TNO() {
     let xs_calc = [];
     for (let i = 1; i < 3000; i++) {
       const [overPressure, duration] = calcAll(clas, i, pressao, velocidade);
-      over_cal.push(overPressure);
+      over_cal.push(overPressure / fator);
       durations.push(duration);
       xs_calc.push(i);
       // console.log(`X: ${i} | overPressure: ${overPressure}`)
@@ -343,7 +344,7 @@ export default function TNO() {
     setLimites(
       getMoreImportantImpactsRadius(xs_calc, over_cal).map((x) => x || 0)
     );
-  }, [clas, pressao, velocidade, calor, volume, perc]);
+  }, [clas, pressao, velocidade, calor, volume, perc, fator]);
   return (
     <>
       <div>
