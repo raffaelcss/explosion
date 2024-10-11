@@ -316,11 +316,11 @@ export default function TNO() {
 
   function getPression(value: number) {
     if (value == 6) return 55.1;
-    if (value == 5) return 48.4;
-    if (value == 4) return 34.5;
-    if (value == 3) return 20.7;
-    if (value == 2) return 13.8;
-    if (value == 1) return 6.9;
+    if (value == 5) return 27.6;
+    if (value == 4) return 13.8;
+    if (value == 3) return 8.3;
+    if (value == 2) return 4.8;
+    if (value == 1) return 2.07;
     if (value == 0) return 1.03;
     return 0;
   }
@@ -334,6 +334,7 @@ export default function TNO() {
       over_cal.push(overPressure);
       durations.push(duration);
       xs_calc.push(i);
+      // console.log(`X: ${i} | overPressure: ${overPressure}`)
     }
 
     setOverPressures(over_cal);

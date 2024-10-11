@@ -1,7 +1,7 @@
 'use client'
 
 import { useRef, useEffect, useState } from "react";
-import { SearchBox } from "@mapbox/search-js-react";
+// import { SearchBox } from "@mapbox/search-js-react";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { useTNO } from "@/hooks/useTNO";
