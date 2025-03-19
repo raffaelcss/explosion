@@ -176,7 +176,7 @@ export default function InfoContainer() {
         </div>
         <TNO />
       </div>
-      <div className="">Equipe de PSM Aperam South America - 2024</div>
+{/*       <div className="">Equipe de PSM Aperam South America - 2024</div> */}
     </div>
   );
 }
