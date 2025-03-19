@@ -10,12 +10,12 @@ export default function Home() {
     <div className="flex flex-col items-center w-full md:h-screen">
       <div className="bg-slate-200 h-24 w-full flex justify-between items-center px-6 gap-2">
         <div className="mt-5 cursor-pointer">
-          <Image
+{/*           <Image
             src="/Logo_Aperam.png"
             alt="Aperam logo"
             height={55}
             width={194}
-          />
+          /> */}
         </div>
         <div className="flex gap-2 items-center">
           <div className="cursor-default text-lg text-slate-700">Raffael C.</div>
