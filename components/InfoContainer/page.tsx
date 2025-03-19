@@ -89,7 +89,7 @@ export default function InfoContainer() {
   }
 
   return (
-    <div className="flex flex-col items-center justify-between gap-2">
+    <div className="flex h-[30rem] flex-col items-center justify-between gap-2">
       <div className="p-2 gap-2 flex flex-col md:flex-row items-center bg-slate-200 rounded-lg h-full">
         <div className="flex w-72 flex-col items-center">
           <div className="text-3xl font-bold text-center w-full my-6">
