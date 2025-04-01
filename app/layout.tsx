@@ -11,13 +11,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="pt-br" suppressHydrationWarning>
       <body
         className={`antialiased`}
       >
         <AppRouterCacheProvider>
           <TNOContextProvider>
-            {children}
+            <div className="w-screen h-screen">
+              {children}
+            </div>
           </TNOContextProvider>
         </AppRouterCacheProvider>
       </body>
