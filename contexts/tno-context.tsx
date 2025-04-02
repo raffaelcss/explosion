@@ -13,7 +13,7 @@ export const TNOContext = createContext({
   zoom: 15,
   limites: [] as number[],
   perc: 0.5,
-  fator: 1,
+  fator: 100,
   setCalor: (value: number) => {},
   setVelocidade: (value: number) => {},
   setPressao: (value: number) => {},
@@ -42,7 +42,7 @@ export function TNOContextProvider({ children }: ProviderProps) {
   const [zoom, setZoom] = useState(15);
   const [limites, setLimites] = useState([] as number[]);
   const [perc, setPerc] = useState(0.5);
-  const [fator, setFator] = useState(1);
+  const [fator, setFator] = useState(100);
 
   return (
     <TNOContext.Provider

@@ -6,7 +6,7 @@ import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { useTNO } from "@/hooks/useTNO";
 
-const accessToken = "pk.eyJ1IjoicmFmZmFlbGNzcyIsImEiOiJjbTFubnczZG0wdnd5MmtwdjByOW9lOHgyIn0.r7wvcYSMMUzhsPu97B9zGQ";
+const accessToken = process.env.NEXT_PUBLIC_MAPBOX_API_KEY;
 
 export default function MapWithGeocoder() {
 
@@ -25,7 +25,7 @@ export default function MapWithGeocoder() {
     if (!document){
       return
     }
-    mapboxgl.accessToken = accessToken;
+    mapboxgl.accessToken = accessToken || "";
 
     // @ts-ignore
     mapInstanceRef.current = new mapboxgl.Map({
@@ -34,6 +34,7 @@ export default function MapWithGeocoder() {
       style: 'mapbox://styles/mapbox/standard-satellite',
       center: [-42.6454, -19.5318], // starting position [lng, lat]
       zoom: zoom, // starting zoom
+      logoPosition: "bottom-right",
     });
 
     // @ts-ignore
@@ -225,7 +226,7 @@ export default function MapWithGeocoder() {
     } */}
       {
         // @ts-ignore
-        (<div id="map-container" ref={mapContainerRef} style={{ height: "100%"}} />)
+        (<div id="map-container" ref={mapContainerRef} style={{ height: "100%", width: "100%"}} />)
       }
     </>
   );
