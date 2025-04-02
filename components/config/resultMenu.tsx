@@ -9,7 +9,6 @@ export default function ResultMenu(props: ResultMenuProps) {
     "Projeção de materiais",
     "Danos estruturais menores",
     "Danos estruturais medianos",
-    "Danos estruturais medianos",
     "Janelas se quebram",
     "Colapso de paredes e telhados",
     "Demolição de prédios e tanques metálicos",
@@ -21,7 +20,6 @@ export default function ResultMenu(props: ResultMenuProps) {
     "Sensação leve da onda de choque",
     "Risco de ferimentos leves por estilhaços",
     "Risco de ferimentos por estilhaços",
-    "Danos pulmonares leves",
     "Danos pulmonares leves, possível ruptura de tímpano",
     "Ruptura do tímpano em 50% dos casos, danos pulmonares graves",
     "Alta probabilidade de óbito por danos internos"
